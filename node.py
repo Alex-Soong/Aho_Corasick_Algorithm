@@ -6,7 +6,7 @@ class Node():
         self.__isbole = IsBole
         self.__character = Character
  
-    def AddGotoNode(self, Character):
+    def addGotoNode(self, Character):
         if Character not in self.__goto.keys():
             currentNode = Node(self.__character is None, Character)
             self.__goto[Character] = currentNode
@@ -14,13 +14,13 @@ class Node():
         else:
             return self.__goto[Character]
  
-    def ConstructionFail(self, TargetNode):
+    def constructionFail(self, TargetNode):
         for currentNode in self.__goto.values():
-            currentNode.AddFailNode(TargetNode)
+            currentNode.addFailNode(TargetNode)
         for currentNode in self.__goto.values():
-            currentNode.ConstructionFail(currentNode.__fail)
+            currentNode.constructionFail(currentNode.__fail)
  
-    def AddFailNode(self, TargetNode):
+    def addFailNode(self, TargetNode):
         if self.__isbole:
             self.__fail = TargetNode
         elif self.__character in TargetNode.__goto.keys():
@@ -28,20 +28,41 @@ class Node():
         else:
             self.__fail = TargetNode.__fail
  
-    def AddOutput(self, Pattern):
+    def addOutput(self, Pattern):
         self.__output = Pattern
  
-    def NextNode(self, Character):
+    def nextNode(self, Character):
         currentNode = self
         while True:
-            currentNode.PrintResult()
+            currentNode.printResult()
             if Character in currentNode.__goto.keys():
                 return currentNode.__goto[Character]
             elif currentNode.__character is None:
                 return currentNode
             currentNode = currentNode.__fail
  
-    def PrintResult(self):
+    def nextNodeAdvanced(self, Character):
+        if Character in self.__goto.keys():
+            self.printResult()
+            return self.__goto[Character]
+        else:
+            return self
+
+    def printResult(self):
         if self.__output is not None:
-            # print(self.__output, end=" ")
+            print(self.__output, end=" ")
             pass
+        
+    def getGotoKeys(self):
+        return self.__goto.keys()
+    
+    def getGotoNodes(self):
+        return self.__goto.values()
+    
+    def getFailNode(self):
+        return self.__fail
+    
+    def addEdge(self, character, node):
+        if character not in self.__goto.keys():
+            self.__goto[character] = node
+        
