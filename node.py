@@ -31,19 +31,23 @@ class Node():
     def addOutput(self, Pattern):
         self.__output = Pattern
  
-    def nextNode(self, Character):
+    def nextNode(self, Character, tree):
         currentNode = self
         while True:
-            currentNode.printResult()
+            if currentNode.getOutput() is not None:
+                tree.addResult(currentNode.getOutput())
+            # currentNode.printResult()
             if Character in currentNode.__goto.keys():
                 return currentNode.__goto[Character]
             elif currentNode.__character is None:
                 return currentNode
             currentNode = currentNode.__fail
  
-    def nextNodeAdvanced(self, Character):
+    def nextNodeAdvanced(self, Character, tree):
         if Character in self.__goto.keys():
-            self.printResult()
+            if self.__output is not None:
+                tree.addResult(self.__output)
+            # self.printResult()
             return self.__goto[Character]
         else:
             return self
@@ -61,6 +65,9 @@ class Node():
     
     def getFailNode(self):
         return self.__fail
+    
+    def getOutput(self):
+        return self.__output
     
     def addEdge(self, character, node):
         if character not in self.__goto.keys():

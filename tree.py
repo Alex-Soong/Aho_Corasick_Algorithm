@@ -4,27 +4,29 @@ from node import Node
 class Tree():
     def __init__(self, advanced=False):
         self.__root = Node()
-        self.advanced = advanced
+        self.__advanced = advanced
+        self.__result = {}
         
     def addPatterns(self, *Patterns):
         for pattern in Patterns:
+            self.__result[pattern] = 0
             currentNode = self.__root
             for character in pattern:
                 currentNode = currentNode.addGotoNode(character)
             currentNode.addOutput(pattern)
         self.__root.addFailNode(self.__root)
         self.__root.constructionFail(self.__root)
-        if self.advanced == True:
+        if self.__advanced == True:
             self.advancedTree()
  
     def matching(self, text):
         currentNode = self.__root
-        if self.advanced == True:
+        if self.__advanced == True:
             for character in text:
-                currentNode = currentNode.nextNodeAdvanced(character)
+                currentNode = currentNode.nextNodeAdvanced(character, self)
         else:
             for character in text:
-                currentNode = currentNode.nextNode(character)
+                currentNode = currentNode.nextNode(character, self)
             
         
     def advancedTree(self):
@@ -45,3 +47,9 @@ class Tree():
             for node in cur.getGotoNodes():
                 queue.append(node)
         return lst
+    
+    def addResult(self, str):
+        self.__result[str] = self.__result[str] + 1
+        
+    def getResult(self):
+        return self.__result

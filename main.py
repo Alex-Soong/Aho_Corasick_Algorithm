@@ -5,7 +5,7 @@ import os
 if __name__ == '__main__':
 
     patterns = [
-        'Harry', 'Hagrid', 'Snape', 'Hermione', # 'Quidditch', 'Dumbledore', 
+        'Harry', 'Hagrid', 'Snape', 'Hermione',  'Quidditch',  'Dumbledore', 
         # 'Dursley', 'Ron', 'McGonagall', 'Dudley', 'Hogwarts', 'thanks', 'Ginny',
         # 'what', 'let', 'wand', 'Voldemort'
         ]
@@ -14,17 +14,20 @@ if __name__ == '__main__':
     t2 = Tree(advanced=True)
     t2.addPatterns(*patterns)
     
+    print()
     file = open("text.txt", "r")
     text = file.read()
     time1 = time.time()
     t1.matching(text)
+    print(t1.getResult())
     time2 = time.time()
 #     os.system('pause')
     time3 = time.time()
     t2.matching(text)
     time4 = time.time()
-    
     print()
+    print(t2.getResult())
+    
     print()
     print('Before optimization: total time: ' + str(time2 - time1) + "s")
     print()

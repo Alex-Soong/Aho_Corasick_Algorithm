@@ -1,0 +1,5 @@
+ patterns = [
+        'Harry', 'Hagrid', 'Snape', 'Hermione',  'Quidditch',  'Dumbledore', 
+        # 'Dursley', 'Ron', 'McGonagall', 'Dudley', 'Hogwarts', 'thanks', 'Ginny',
+        # 'what', 'let', 'wand', 'Voldemort'
+        ]
